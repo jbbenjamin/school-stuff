@@ -1,0 +1,2 @@
+prog: Project3.java
+	javac Project3.java

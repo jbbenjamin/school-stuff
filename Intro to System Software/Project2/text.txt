@@ -1,0 +1,12 @@
+Project 2 - SIC/XE Integer Reversal Program
+
+Purpose: The purpose of this program is to take a string of 10 integers and reverse their order.
+
+Input: There is no input for this program, the integers used are hardwired into the program itself.
+
+Output: This program does not output anything.
+
+Description: 
+-This program takes 10 integers initialized in memory and reverses them.
+-In the final memory dump at the end of sic.log file, the original list of integers is stored from location 0124 to 0142.
+-The reversed list of numbers is located from 0142 to 0160. 

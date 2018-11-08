@@ -1,0 +1,17 @@
+          START    100                                                                                                      
+BIG       LDA      NUM                                                                                                        
+          ADD     #14                                                                                                           
+.This line is a comment line                                                                    
+          STA      ANS                                                                                                
+UP        LDA     #SEC                                                                                              
+         +ADD      THR                                                                                          
+UP        LDS     @SML                                                                                                  
+          ADDR     A, S                                                                                    
+          SUB     #11                                                                                                               
+          FAKE    #0                                                                                                       
+
+NUM       WORD     7                                                                                               
+SEC       WORD     13                                                                                                         
+THR       WORD     19                                                                                           
+SML       WORD     2                                                                                              
+ANS       RESW     1                                                                                               

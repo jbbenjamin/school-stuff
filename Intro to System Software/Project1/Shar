@@ -1,0 +1,376 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.7).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `#!/bin/sh' line above, then type `sh FILE'.
+#
+lock_dir=_sh17537
+# Made on 2015-09-30 22:56 EDT by <n00853961@osprey.unfcsd.unf.edu>.
+# Source directory was `/home/61/n00853961'.
+#
+# Existing files will *not* be overwritten, unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#   3393 -rw-r--r-- Project1.java
+#    211 -rw-r--r-- example.txt
+#   1573 -rw-r--r-- text.txt
+#     41 -rw-r--r-- makefile
+#
+MD5SUM=${MD5SUM-md5sum}
+f=`${MD5SUM} --version | egrep '^md5sum .*(core|text)utils'`
+test -n "${f}" && md5check=true || md5check=false
+${md5check} || \
+  echo 'Note: not verifying md5sums.  Consider installing GNU coreutils.'
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    case `$dir/gettext --version 2>&1 | sed 1q` in
+      *GNU*) gettext_dir=$dir ;;
+    esac
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+if (echo "testing\c"; echo 1,2,3) | grep c >/dev/null
+then if (echo -n test; echo 1,2,3) | grep n >/dev/null
+     then shar_n= shar_c='
+'
+     else shar_n=-n shar_c= ; fi
+else shar_n= shar_c='\c' ; fi
+f=shar-touch.$$
+st1=200112312359.59
+st2=123123592001.59
+st2tr=123123592001.5 # old SysV 14-char limit
+st3=1231235901
+
+if touch -am -t ${st1} ${f} >/dev/null 2>&1 && \
+   test ! -f ${st1} && test -f ${f}; then
+  shar_touch='touch -am -t $1$2$3$4$5$6.$7 "$8"'
+
+elif touch -am ${st2} ${f} >/dev/null 2>&1 && \
+   test ! -f ${st2} && test ! -f ${st2tr} && test -f ${f}; then
+  shar_touch='touch -am $3$4$5$6$1$2.$7 "$8"'
+
+elif touch -am ${st3} ${f} >/dev/null 2>&1 && \
+   test ! -f ${st3} && test -f ${f}; then
+  shar_touch='touch -am $3$4$5$6$2 "$8"'
+
+else
+  shar_touch=:
+  echo
+  ${echo} 'WARNING: not restoring timestamps.  Consider getting and'
+  ${echo} 'installing GNU `touch'\'', distributed in GNU coreutils...'
+  echo
+fi
+rm -f ${st1} ${st2} ${st2tr} ${st3} ${f}
+#
+if test ! -d ${lock_dir}
+then : ; else ${echo} 'lock directory '${lock_dir}' exists'
+  exit 1
+fi
+if mkdir ${lock_dir}
+then ${echo} 'x - created lock directory `'${lock_dir}\''.'
+else ${echo} 'x - failed to create lock directory `'${lock_dir}\''.'
+  exit 1
+fi
+# ============= Project1.java ==============
+if test -f 'Project1.java' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING Project1.java (file already exists)'
+else
+${echo} 'x - extracting Project1.java (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'Project1.java' &&
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+public class Project1 {
+X	public static void main(String[] args) throws IOException{
+X	HashTable hshTable = new HashTable(83);	
+X	String[] list = new String[40];
+X	
+X	String fileName = args[0];
+X	readFile(fileName, list, hshTable);
+X	
+X	return;
+X
+X	}
+X	
+X	private static String[] readFile(String fileName, String[] list, HashTable table)throws IOException{	
+X		BufferedReader br = new BufferedReader(new FileReader(fileName));
+X		
+X		String line = null;
+X		while((line = br.readLine()) != null){
+X		if(line.lastIndexOf(" ") != -1){
+X			if(table.check(line, table) != true){
+X			store(line, table);
+X			}
+X		}
+X		else
+X			search(line, table);
+X			
+X		}
+X		return list;
+X	}
+X
+X	static void store(String sampleString, HashTable sampleTable){
+X		int x = sampleString.lastIndexOf(" ");
+X		String xToEnd = sampleString.substring(x);
+X		String valueString = xToEnd.trim();
+X		int value = Integer.parseInt(valueString);
+X		String chString = (sampleString.substring(0,x));
+X		DataItem stringItem = new DataItem(value, chString);
+X		sampleTable.insert(stringItem);
+X	}
+X
+X	static void search(String searchString, HashTable sampleTable){
+X		sampleTable.find(searchString);
+X	}
+}
+//---------------------------------------------------------------------------
+class DataItem {
+X	private int iData;
+X	private String sName;
+X	
+X	public DataItem(int num, String name){
+X		iData = num;
+X		sName = name;
+X	}
+X	
+X	public int getNum(){
+X		return iData;
+X	}
+X	
+X	public String getName(){
+X		return sName;
+X	}
+}
+//---------------------------------------------------------------------------
+class HashTable {
+X	private DataItem[] inputList;
+X	private int listSize;
+X	
+X	HashTable(int size){
+X		listSize = size;
+X		inputList = new DataItem[listSize];
+X		
+X	}
+X	
+X	public int hashFunc(String key){
+X		int sum = ((int)key.charAt(0) + (int)key.charAt(1) + (int)key.charAt(2));
+X		sum = sum % listSize;
+X		return sum;
+X	}
+X
+X	public void insert(DataItem item){
+X		String keyName = item.getName();
+X		int hashVal = hashFunc(keyName);
+X		while(inputList[hashVal] != null){
+X			++hashVal;
+X			hashVal %= listSize;
+X		}
+X	
+X		inputList[hashVal] = item;
+X		System.out.println("stored " + item.getName() + " " + item.getNum() + " at location " +hashVal);
+X	}
+X
+X
+X	public void find(String searchString){
+X		int hashVal = hashFunc(searchString);
+X		
+X		if(inputList[hashVal] != null){
+X			while(inputList[hashVal] != null){
+X				if((inputList[hashVal].getName()).equalsIgnoreCase(searchString)){
+X					System.out.println(searchString + " was found at location " + hashVal + " with value " + inputList[hashVal].getNum());
+X					return;
+X				}
+X				else{
+X					++hashVal;
+X					hashVal %= listSize;
+X				}
+X			}	
+X
+X		}
+X		System.out.println("ERROR " + searchString +" not found!");
+X	}	
+X
+X	public boolean check(String sampleString, HashTable sampleTable){
+X		int x = sampleString.lastIndexOf(" ");
+X		String chString = (sampleString.substring(0,x));
+X		int hashVal = hashFunc(chString);
+X	
+X		if(inputList[hashVal] != null){
+X			while(inputList[hashVal] != null){
+X				if((inputList[hashVal].getName()).equalsIgnoreCase(chString)){
+X					System.out.println(chString + " already exists at location " + hashVal);
+X					return true;
+X				}
+X				else{
+X					++hashVal;
+X					hashVal %= listSize;
+X				}	
+X			}
+X		}
+X		return false;
+X	}
+}
+SHAR_EOF
+  (set 20 15 09 30 22 13 07 'Project1.java'; eval "$shar_touch") &&
+  chmod 0644 'Project1.java'
+if test $? -ne 0
+then ${echo} 'restore of Project1.java failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'Project1.java: MD5 check failed'
+       ) << \SHAR_EOF
+846d2dc8de584bd56885a42e0b898075  Project1.java
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'Project1.java'` -ne 3393 && \
+  ${echo} 'restoration warning:  size of Project1.java is not 3393'
+  fi
+fi
+# ============= example.txt ==============
+if test -f 'example.txt' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING example.txt (file already exists)'
+else
+${echo} 'x - extracting example.txt (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'example.txt' &&
+moss 25
+eno
+moss
+michael 16
+gorge 12
+michael
+moss 24
+loom 8
+steve 20
+luna 19
+copycat
+luna
+thompson
+carl 1
+roost 29
+gorge
+flambo 33
+SuperSteve 9
+john 22
+pat
+cyrus 11
+cena 13
+SuperSteve
+dond 1
+son 1
+lily
+dond
+son
+SHAR_EOF
+  (set 20 15 09 30 22 40 31 'example.txt'; eval "$shar_touch") &&
+  chmod 0644 'example.txt'
+if test $? -ne 0
+then ${echo} 'restore of example.txt failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'example.txt: MD5 check failed'
+       ) << \SHAR_EOF
+baba6a1bfde0ff3c2852e4852f46aa29  example.txt
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'example.txt'` -ne 211 && \
+  ${echo} 'restoration warning:  size of example.txt is not 211'
+  fi
+fi
+# ============= text.txt ==============
+if test -f 'text.txt' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING text.txt (file already exists)'
+else
+${echo} 'x - extracting text.txt (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'text.txt' &&
+Project 1 - Hashtable
+X
+Purpose: The purpose of this program is to hash strings into a table (array).
+X
+Input: Name of .txt file which contains strings. The file included with this program is called example.txt
+X
+Output: No files are output.
+X
+Description: 
+-The program begins by asking the user to input the name of a file.
+-The file is supposed to contain strings of characters with integers and strings of just characters (exmaple "moss 25", "parrot", etc.)
+-The program uses a buffered reader to read through the file one line at a time.
+-If the program reads a string of the folliwng format: "randomCharcters randomIntegers", it calls a method named "check" that uses the hashing function on the string to find its unique location, and it looks through the hash table to see if the string is already stored somewhere in the table.
+-If the program does not find the string in the hash table, it calls the method "store" to insert the string in the hash table in its unique hashing function-determined location.
+-If the program does find the string in the hash table, it prints an error message saying that the string already exists in the table and gives its location.
+-If the programs reads a string of the following format: "randomCharacters", it calls a method named "search" to try to find if the string exists somewhere in the table.
+-If the program successfully finds the string, it prints a message saying the string was found and gives its location.
+-If the program does not find the string, it prints an error message saying that the string could not be found.   
+SHAR_EOF
+  (set 20 15 09 30 15 02 46 'text.txt'; eval "$shar_touch") &&
+  chmod 0644 'text.txt'
+if test $? -ne 0
+then ${echo} 'restore of text.txt failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'text.txt: MD5 check failed'
+       ) << \SHAR_EOF
+28ad81b1ebc5b76ed4d27eaa0170d454  text.txt
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'text.txt'` -ne 1573 && \
+  ${echo} 'restoration warning:  size of text.txt is not 1573'
+  fi
+fi
+# ============= makefile ==============
+if test -f 'makefile' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING makefile (file already exists)'
+else
+${echo} 'x - extracting makefile (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'makefile' &&
+prog: Project1.java
+X	javac Project1.java
+SHAR_EOF
+  (set 20 15 09 30 22 52 08 'makefile'; eval "$shar_touch") &&
+  chmod 0644 'makefile'
+if test $? -ne 0
+then ${echo} 'restore of makefile failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'makefile: MD5 check failed'
+       ) << \SHAR_EOF
+3f364dd8e5fd8733245406f87e4ffc01  makefile
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'makefile'` -ne 41 && \
+  ${echo} 'restoration warning:  size of makefile is not 41'
+  fi
+fi
+if rm -fr ${lock_dir}
+then ${echo} 'x - removed lock directory `'${lock_dir}\''.'
+else ${echo} 'x - failed to remove lock directory `'${lock_dir}\''.'
+  exit 1
+fi
+exit 0

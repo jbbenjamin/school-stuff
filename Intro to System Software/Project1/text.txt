@@ -1,0 +1,18 @@
+Project 1 - Hashtable
+
+Purpose: The purpose of this program is to hash strings into a table (array).
+
+Input: Name of .txt file which contains strings. The file included with this program is called example.txt
+
+Output: No files are output.
+
+Description: 
+-The program begins by asking the user to input the name of a file.
+-The file is supposed to contain strings of characters with integers and strings of just characters (exmaple "moss 25", "parrot", etc.)
+-The program uses a buffered reader to read through the file one line at a time.
+-If the program reads a string of the folliwng format: "randomCharcters randomIntegers", it calls a method named "check" that uses the hashing function on the string to find its unique location, and it looks through the hash table to see if the string is already stored somewhere in the table.
+-If the program does not find the string in the hash table, it calls the method "store" to insert the string in the hash table in its unique hashing function-determined location.
+-If the program does find the string in the hash table, it prints an error message saying that the string already exists in the table and gives its location.
+-If the programs reads a string of the following format: "randomCharacters", it calls a method named "search" to try to find if the string exists somewhere in the table.
+-If the program successfully finds the string, it prints a message saying the string was found and gives its location.
+-If the program does not find the string, it prints an error message saying that the string could not be found.   

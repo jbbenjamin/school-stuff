@@ -1,0 +1,723 @@
+#!/bin/sh
+# This is a shell archive (produced by GNU sharutils 4.7).
+# To extract the files from this archive, save it to some FILE, remove
+# everything before the `#!/bin/sh' line above, then type `sh FILE'.
+#
+lock_dir=_sh05172
+# Made on 2015-12-04 22:56 EST by <n00853961@osprey.unfcsd.unf.edu>.
+# Source directory was `/home/61/n00853961/Assignment7'.
+#
+# Existing files will *not* be overwritten, unless `-c' is specified.
+#
+# This shar contains:
+# length mode       name
+# ------ ---------- ------------------------------------------
+#   1015 -rw-r--r-- breadthSearch.c
+#    276 -rw-r--r-- checkExistence.c
+#    726 -rw-r--r-- depthSearch.c
+#    366 -rw-r--r-- dequeue.c
+#    411 -rw-r--r-- displayAdjacencyList.c
+#    375 -rw-r--r-- enqueue.c
+#   1520 -rw-r--r-- main.c
+#    628 -rw-r--r-- makeEdge.c
+#    276 -rw-r--r-- makeVertex.c
+#    411 -rw-r--r-- popVertex.c
+#    404 -rw-r--r-- pushVertex.c
+#   1351 -rw-r--r-- myheader.h
+#
+MD5SUM=${MD5SUM-md5sum}
+f=`${MD5SUM} --version | egrep '^md5sum .*(core|text)utils'`
+test -n "${f}" && md5check=true || md5check=false
+${md5check} || \
+  echo 'Note: not verifying md5sums.  Consider installing GNU coreutils.'
+save_IFS="${IFS}"
+IFS="${IFS}:"
+gettext_dir=FAILED
+locale_dir=FAILED
+first_param="$1"
+for dir in $PATH
+do
+  if test "$gettext_dir" = FAILED && test -f $dir/gettext \
+     && ($dir/gettext --version >/dev/null 2>&1)
+  then
+    case `$dir/gettext --version 2>&1 | sed 1q` in
+      *GNU*) gettext_dir=$dir ;;
+    esac
+  fi
+  if test "$locale_dir" = FAILED && test -f $dir/shar \
+     && ($dir/shar --print-text-domain-dir >/dev/null 2>&1)
+  then
+    locale_dir=`$dir/shar --print-text-domain-dir`
+  fi
+done
+IFS="$save_IFS"
+if test "$locale_dir" = FAILED || test "$gettext_dir" = FAILED
+then
+  echo=echo
+else
+  TEXTDOMAINDIR=$locale_dir
+  export TEXTDOMAINDIR
+  TEXTDOMAIN=sharutils
+  export TEXTDOMAIN
+  echo="$gettext_dir/gettext -s"
+fi
+if (echo "testing\c"; echo 1,2,3) | grep c >/dev/null
+then if (echo -n test; echo 1,2,3) | grep n >/dev/null
+     then shar_n= shar_c='
+'
+     else shar_n=-n shar_c= ; fi
+else shar_n= shar_c='\c' ; fi
+f=shar-touch.$$
+st1=200112312359.59
+st2=123123592001.59
+st2tr=123123592001.5 # old SysV 14-char limit
+st3=1231235901
+
+if touch -am -t ${st1} ${f} >/dev/null 2>&1 && \
+   test ! -f ${st1} && test -f ${f}; then
+  shar_touch='touch -am -t $1$2$3$4$5$6.$7 "$8"'
+
+elif touch -am ${st2} ${f} >/dev/null 2>&1 && \
+   test ! -f ${st2} && test ! -f ${st2tr} && test -f ${f}; then
+  shar_touch='touch -am $3$4$5$6$1$2.$7 "$8"'
+
+elif touch -am ${st3} ${f} >/dev/null 2>&1 && \
+   test ! -f ${st3} && test -f ${f}; then
+  shar_touch='touch -am $3$4$5$6$2 "$8"'
+
+else
+  shar_touch=:
+  echo
+  ${echo} 'WARNING: not restoring timestamps.  Consider getting and'
+  ${echo} 'installing GNU `touch'\'', distributed in GNU coreutils...'
+  echo
+fi
+rm -f ${st1} ${st2} ${st2tr} ${st3} ${f}
+#
+if test ! -d ${lock_dir}
+then : ; else ${echo} 'lock directory '${lock_dir}' exists'
+  exit 1
+fi
+if mkdir ${lock_dir}
+then ${echo} 'x - created lock directory `'${lock_dir}\''.'
+else ${echo} 'x - failed to create lock directory `'${lock_dir}\''.'
+  exit 1
+fi
+# ============= breadthSearch.c ==============
+if test -f 'breadthSearch.c' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING breadthSearch.c (file already exists)'
+else
+${echo} 'x - extracting breadthSearch.c (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'breadthSearch.c' &&
+#include "myheader.h"
+X
+void breadthSearch(VERTEX* listOfVerticies[], int size){
+X
+VERTEX* current;
+EDGE* currentEdge;
+QUEUE* vQueue;
+X
+current = listOfVerticies[0];
+printf("\n %c" ,(*current).c);
+(*current).isVisited = true;
+enqueue(vQueue, (*current).c);
+X   while((*vQueue).front != NULL){                       //while queue is not empty
+X      if((*current).p != NULL){                             //if the vertext has an edge...
+X         currentEdge = (*current).p;                        
+X      }
+X      dequeue(vQueue, (*current).c);                         //remove vertex from queue
+X      
+X      currentEdge->v->isVisited = true;
+X      printf("\n %c" ,(*currentEdge).v);
+X      enqueue(vQueue, currentEdge->v->c);
+X      while((*currentEdge).q != NULL && currentEdge->v->isvisited == false){   
+X         currentEdge = (*currentEdge).q
+X         currentEdge->v->isVisited = true;
+X         printf("\n %c" , currentEdge->v->c);
+X         enqueue(vQueue, currentEdge->v->c);
+X      }      
+X   
+SHAR_EOF
+  (set 20 15 12 04 22 49 58 'breadthSearch.c'; eval "$shar_touch") &&
+  chmod 0644 'breadthSearch.c'
+if test $? -ne 0
+then ${echo} 'restore of breadthSearch.c failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'breadthSearch.c: MD5 check failed'
+       ) << \SHAR_EOF
+8a02c3e220d44f5b100a91b18bac243d  breadthSearch.c
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'breadthSearch.c'` -ne 1015 && \
+  ${echo} 'restoration warning:  size of breadthSearch.c is not 1015'
+  fi
+fi
+# ============= checkExistence.c ==============
+if test -f 'checkExistence.c' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING checkExistence.c (file already exists)'
+else
+${echo} 'x - extracting checkExistence.c (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'checkExistence.c' &&
+#include "myheader.h"
+X
+bool checkExistence(VERTEX* listOfVerticies[], char currentLetter, int size)
+{
+X
+int i = 0;
+X
+X 
+for(i = 0; i < size; i++){
+X   if(currentLetter == (*listOfVerticies[i]).c){
+X      return true;
+X   }   
+X   //else
+X      //i++;
+}
+return false;
+}
+SHAR_EOF
+  (set 20 15 12 04 22 48 55 'checkExistence.c'; eval "$shar_touch") &&
+  chmod 0644 'checkExistence.c'
+if test $? -ne 0
+then ${echo} 'restore of checkExistence.c failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'checkExistence.c: MD5 check failed'
+       ) << \SHAR_EOF
+791984d766c23d092d033fa7b014c59a  checkExistence.c
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'checkExistence.c'` -ne 276 && \
+  ${echo} 'restoration warning:  size of checkExistence.c is not 276'
+  fi
+fi
+# ============= depthSearch.c ==============
+if test -f 'depthSearch.c' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING depthSearch.c (file already exists)'
+else
+${echo} 'x - extracting depthSearch.c (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'depthSearch.c' &&
+#include "myheader.h"
+X
+void depthSearch(VERTEX* listOfVerticies[], int size){
+X
+VERTEX* current;
+STACK* vStack;
+X
+vStack = malloc(sizeof(STACK));
+X
+for(i = 0; i < size; i++){
+X   current = listOfVerticies[i];
+X   printf("\n %c" ,(*current).c);
+X   (*current).isVisited = true;
+X   pushVertex(vStack, (*listOfVerticies[i]).c);
+X
+X   
+X   while((*current).p != NULL){
+X      current = current->p->v;
+X      printf("\n %c" ,&current.c);
+X      (*current).isVisited = true;
+X      pushVertex(vStack, (*listOfVerticies[i]).c);
+X   }
+X   
+X   popVertex(vStack, (*current).c);
+X   current = (*vStack).top;
+X   while(current.p != NULL && current->p->v->isVisited == true){
+X      popVertex(vStack, (*current).c);
+X   }
+X   
+}
+SHAR_EOF
+  (set 20 15 12 04 22 49 27 'depthSearch.c'; eval "$shar_touch") &&
+  chmod 0644 'depthSearch.c'
+if test $? -ne 0
+then ${echo} 'restore of depthSearch.c failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'depthSearch.c: MD5 check failed'
+       ) << \SHAR_EOF
+9b96b492f955c5be7ae9621ef51055e1  depthSearch.c
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'depthSearch.c'` -ne 726 && \
+  ${echo} 'restoration warning:  size of depthSearch.c is not 726'
+  fi
+fi
+# ============= dequeue.c ==============
+if test -f 'dequeue.c' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING dequeue.c (file already exists)'
+else
+${echo} 'x - extracting dequeue.c (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'dequeue.c' &&
+#include "myheader.h"
+X
+bool dequeue (QUEUE* queue, char* dataOut){
+X
+QUEUE_NODE* deleteLoc;
+X
+if(!(*queue).count)
+X   return false;
+X   
+X   *dataOut = queue->front->data;
+X   deleteLoc = (*queue).front;
+X   
+X   if((*queue).count == 1)
+X      (*queue).rear = (*queue).front = NULL;
+X   else
+X      (*queue).front = queue->front->next;
+X   ((*queue).count)--;
+}
+SHAR_EOF
+  (set 20 15 12 04 22 49 35 'dequeue.c'; eval "$shar_touch") &&
+  chmod 0644 'dequeue.c'
+if test $? -ne 0
+then ${echo} 'restore of dequeue.c failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'dequeue.c: MD5 check failed'
+       ) << \SHAR_EOF
+f42b51be3168e7768ef29adbe568d64a  dequeue.c
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'dequeue.c'` -ne 366 && \
+  ${echo} 'restoration warning:  size of dequeue.c is not 366'
+  fi
+fi
+# ============= displayAdjacencyList.c ==============
+if test -f 'displayAdjacencyList.c' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING displayAdjacencyList.c (file already exists)'
+else
+${echo} 'x - extracting displayAdjacencyList.c (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'displayAdjacencyList.c' &&
+#include "myheader.h"
+X
+void displayAdjacencyList(VERTEX* listOfVerticies[], int size){
+X
+int i = 0;
+EDGE* current;
+X
+for(i = 0; i < size; i++){
+X   printf("\n %c" ,(*listOfVerticies[i]).c);
+X   current = (*listOfVerticies[i]).p;
+X   printf("%c", current->v->c);
+X   while((*current).q != NULL){
+X      current = (*current).q;
+X      printf("-->");
+X      printf("%c", current->v->c);
+X   }
+}
+return;
+}
+SHAR_EOF
+  (set 20 15 12 04 22 49 04 'displayAdjacencyList.c'; eval "$shar_touch") &&
+  chmod 0644 'displayAdjacencyList.c'
+if test $? -ne 0
+then ${echo} 'restore of displayAdjacencyList.c failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'displayAdjacencyList.c: MD5 check failed'
+       ) << \SHAR_EOF
+2bba3fbc3506e1c8c7ba280b187a2527  displayAdjacencyList.c
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'displayAdjacencyList.c'` -ne 411 && \
+  ${echo} 'restoration warning:  size of displayAdjacencyList.c is not 411'
+  fi
+fi
+# ============= enqueue.c ==============
+if test -f 'enqueue.c' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING enqueue.c (file already exists)'
+else
+${echo} 'x - extracting enqueue.c (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'enqueue.c' &&
+#include "myheader.h"
+X
+bool enqueue (QUEUE* queue, char dataIn){
+X
+QUEUE_NODE* newPtr;
+X
+if(!(newPtr = malloc(sizeof(QUEUE_NODE))))
+X   return false;
+X   
+X   (*newPtr).data = dataIn;
+X   (*newPtr).next = NULL;
+X   
+X   if((*queue).count == 0)
+X      (*queue).front = newPtr;
+X   else
+X      queue->rear->next = newPtr;
+X   ((*queue).count)++;
+X   (*queue).rear = newPtr;
+SHAR_EOF
+  (set 20 15 12 04 22 49 13 'enqueue.c'; eval "$shar_touch") &&
+  chmod 0644 'enqueue.c'
+if test $? -ne 0
+then ${echo} 'restore of enqueue.c failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'enqueue.c: MD5 check failed'
+       ) << \SHAR_EOF
+ae44deac4dc6c2031f228d2f7b200941  enqueue.c
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'enqueue.c'` -ne 375 && \
+  ${echo} 'restoration warning:  size of enqueue.c is not 375'
+  fi
+fi
+# ============= main.c ==============
+if test -f 'main.c' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING main.c (file already exists)'
+else
+${echo} 'x - extracting main.c (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'main.c' &&
+#include "myheader.h"
+X
+//void sortArray(int ptr[], int size);
+X
+int main (int argc, char* argv[])
+{
+X
+FILE* spFile;
+char letter;
+int listSize = 0;
+int count = 0;
+int j;
+X
+VERTEX* tempVertex = (VERTEX*)malloc(sizeof(VERTEX));
+VERTEX* vertexList[26];
+X
+X
+for(j = 0; j < 26; j++)
+X	{
+X		vertexList[j] = tempVertex;
+X	}	
+X
+spFile = fopen(argv[1], "r");
+X
+fscanf(spFile, "%c", &letter);	                           //read first letter
+count++;
+X
+makeVertex(vertexList, listSize, letter);                //make a vertex
+listSize++;
+X
+X
+fscanf(spFile, "%c", &letter);                              //read next letter
+X
+X
+while(fscanf(spFile, "%c", &letter) != EOF){                                       // while there's still more data to be read, read data, and...
+X   if(checkExistence(vertexList, letter, listSize) == false)
+X   {                                                        //if letter isn't already a vertex
+X      makeVertex(vertexList, listSize, letter);             //make a vertex
+X      count++;
+X      listSize++;
+X   }
+X   else{
+X   count++;
+X   }
+X   
+X   if((count % 2) == 0){                                     // if two letters have been read...
+X      makeEdge(vertexList, count);                           // make an edge
+X   }
+X   
+X   fscanf(spFile, "%c", &letter);                            //read next letter
+} // while
+X
+displayAdjacencyList(vertexList, listSize);
+X
+depthSearch(vertexList, listSize);
+X
+breadthSearch(vertexList, listSize);
+X
+return 0;
+}	//end main
+SHAR_EOF
+  (set 20 15 12 04 22 48 13 'main.c'; eval "$shar_touch") &&
+  chmod 0644 'main.c'
+if test $? -ne 0
+then ${echo} 'restore of main.c failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'main.c: MD5 check failed'
+       ) << \SHAR_EOF
+b3bbbca727120641aacd28e2cb41f2c2  main.c
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'main.c'` -ne 1520 && \
+  ${echo} 'restoration warning:  size of main.c is not 1520'
+  fi
+fi
+# ============= makeEdge.c ==============
+if test -f 'makeEdge.c' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING makeEdge.c (file already exists)'
+else
+${echo} 'x - extracting makeEdge.c (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'makeEdge.c' &&
+#include "myheader.h"
+X
+void makeEdge(VERTEX* listOfVerticies[], int runningCount)
+{
+int i = (runningCount / 2);
+EDGE* ei;
+(*ei).v = listOfVerticies[(runningCount - 1)];
+(*ei).q = NULL;
+X
+if(listOfVerticies[(runningCount - 2)]->p == NULL){
+X   listOfVerticies[(runningCount - 2)]->p = ei;
+}
+X
+else{
+EDGE* current;
+current = listOfVerticies[(runningCount - 2)]->p;
+X   while((*current).q != NULL){
+X      current = (*current).q;
+X   }
+X   ei = (*current).q;
+X   
+}
+printf("there is an edge from %c -> %c\n", listOfVerticies[(runningCount - 2)]->c, listOfVerticies[(runningCount - 1)]->p->v->c);          
+return;
+}
+SHAR_EOF
+  (set 20 15 12 04 22 48 40 'makeEdge.c'; eval "$shar_touch") &&
+  chmod 0644 'makeEdge.c'
+if test $? -ne 0
+then ${echo} 'restore of makeEdge.c failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'makeEdge.c: MD5 check failed'
+       ) << \SHAR_EOF
+200aeea4d8d757102f0a4fa9b1a39912  makeEdge.c
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'makeEdge.c'` -ne 628 && \
+  ${echo} 'restoration warning:  size of makeEdge.c is not 628'
+  fi
+fi
+# ============= makeVertex.c ==============
+if test -f 'makeVertex.c' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING makeVertex.c (file already exists)'
+else
+${echo} 'x - extracting makeVertex.c (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'makeVertex.c' &&
+#include "myheader.h"
+X
+void makeVertex (VERTEX* listOfVerticies[], int size, char currentLetter)
+{
+int i = size;
+(i += 1);
+VERTEX* vi;
+(*vi).c = currentLetter;
+(*vi).isVisited = false;
+(*vi).p = NULL;
+X
+listOfVerticies[size] = vi;
+printf("%c", (*vi).c);
+return;
+}
+SHAR_EOF
+  (set 20 15 12 04 22 48 44 'makeVertex.c'; eval "$shar_touch") &&
+  chmod 0644 'makeVertex.c'
+if test $? -ne 0
+then ${echo} 'restore of makeVertex.c failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'makeVertex.c: MD5 check failed'
+       ) << \SHAR_EOF
+a958ee1ada3698c25e6b10bfae196185  makeVertex.c
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'makeVertex.c'` -ne 276 && \
+  ${echo} 'restoration warning:  size of makeVertex.c is not 276'
+  fi
+fi
+# ============= popVertex.c ==============
+if test -f 'popVertex.c' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING popVertex.c (file already exists)'
+else
+${echo} 'x - extracting popVertex.c (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'popVertex.c' &&
+#include "myheader.h"
+X
+bool popVertex (STACK* vStack, char* dataOut)
+{
+X
+X   STACK_NODE* vNew;
+X   bool        success;
+X   
+X   if ((*vStack).top)
+X   {
+X      success = true;
+X      *dataOut = vStack->top->c;
+X      vNew = (*vStack).top;
+X      (*vStack).top = vStack->top->link; 
+X      (*vStack).count--;
+X      free (vNew);
+X   }
+X   else
+X      {
+X      success = false;
+X      }
+X   return success;
+}
+SHAR_EOF
+  (set 20 15 12 04 22 49 50 'popVertex.c'; eval "$shar_touch") &&
+  chmod 0644 'popVertex.c'
+if test $? -ne 0
+then ${echo} 'restore of popVertex.c failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'popVertex.c: MD5 check failed'
+       ) << \SHAR_EOF
+d08ae9247352603145967249704c63b0  popVertex.c
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'popVertex.c'` -ne 411 && \
+  ${echo} 'restoration warning:  size of popVertex.c is not 411'
+  fi
+fi
+# ============= pushVertex.c ==============
+if test -f 'pushVertex.c' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING pushVertex.c (file already exists)'
+else
+${echo} 'x - extracting pushVertex.c (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'pushVertex.c' &&
+#include "myheader.h"
+X
+bool pushVertex (STACK* vStack, char dataIn)
+{
+X
+X   STACK_NODE* vNew;
+X   bool        success;
+X   
+X   vNew = (STACK_NODE*)malloc(sizeof (STACK_NODE));
+X   if (!vNew)
+X      success = false
+X   else
+X      {
+X      (*vNew).c = vertex;
+X      (*vNew).link = (*vStack).top;
+X      (*vStack).top = vNew;
+X      (*vStack).count++;
+X      success = true;
+X   }
+X return success;
+}
+SHAR_EOF
+  (set 20 15 12 04 22 49 20 'pushVertex.c'; eval "$shar_touch") &&
+  chmod 0644 'pushVertex.c'
+if test $? -ne 0
+then ${echo} 'restore of pushVertex.c failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'pushVertex.c: MD5 check failed'
+       ) << \SHAR_EOF
+3dc74f0b8f517a88bfd09e9b88f53564  pushVertex.c
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'pushVertex.c'` -ne 404 && \
+  ${echo} 'restoration warning:  size of pushVertex.c is not 404'
+  fi
+fi
+# ============= myheader.h ==============
+if test -f 'myheader.h' && test "$first_param" != -c; then
+  ${echo} 'x -SKIPPING myheader.h (file already exists)'
+else
+${echo} 'x - extracting myheader.h (text)'
+  sed 's/^X//' << 'SHAR_EOF' > 'myheader.h' &&
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+X
+/* Forward declaration */
+struct EDGETAG;
+X
+X
+typedef struct
+{
+X    char c;
+X    bool isVisited;
+X    struct EDGETAG* p;
+} VERTEX;
+X
+X
+typedef struct EDGETAG
+{
+X    VERTEX* v;
+X    struct EDGETAG* q;
+} EDGE;
+X
+X
+typedef struct
+X   {
+X   int            count;
+X   struct node*   top;
+X   } STACK;
+X   
+typedef struct sNode
+X   {
+X   char            data;
+X   struct node*   link;
+X   } STACK_NODE;
+X   
+typedef struct qNode
+X   {
+X   char            data;
+X   struct node*   next;
+X   } QUEUE_NODE;
+X   
+typedef struct
+X   {
+X   QUEUE_NODE*   front;
+X   int           count;
+X   QUEUE_NODE*   rear;
+X   } QUEUE;
+X   
+X   
+X   
+int main(int argc, char* argv[]);
+//void sortArray(int ptr[], int size);
+bool checkExistence(VERTEX* listOfVerticies[], char currentLetter, int size);
+void makeVertex(VERTEX* listOfVerticies[], int size, char currentLetter);
+void makeEdge(VERTEX* listOfVerticies[], int runningCount);
+void displayAdjacencyList(VERTEX* listOfVerticies[], int size);
+void depthSearch(VERTEX* listOfVerticies[], int size);
+bool pushVertex(STACK* vStack, char dataIn);
+bool popVertex(STACK* vStack, char* dataOut);
+void breadthSearch(VERTEX* listOfVerticies[], int size);
+bool enqueue (QUEUE* queue, char dataIn);
+bool dequeue (QUEUE* queue, char* dataOut);
+SHAR_EOF
+  (set 20 15 12 04 22 55 38 'myheader.h'; eval "$shar_touch") &&
+  chmod 0644 'myheader.h'
+if test $? -ne 0
+then ${echo} 'restore of myheader.h failed'
+fi
+  if ${md5check}
+  then (
+       ${MD5SUM} -c >/dev/null 2>&1 || ${echo} 'myheader.h: MD5 check failed'
+       ) << \SHAR_EOF
+8a1c4342739e36219a6687d19c2af123  myheader.h
+SHAR_EOF
+  else
+test `LC_ALL=C wc -c < 'myheader.h'` -ne 1351 && \
+  ${echo} 'restoration warning:  size of myheader.h is not 1351'
+  fi
+fi
+if rm -fr ${lock_dir}
+then ${echo} 'x - removed lock directory `'${lock_dir}\''.'
+else ${echo} 'x - failed to remove lock directory `'${lock_dir}\''.'
+  exit 1
+fi
+exit 0

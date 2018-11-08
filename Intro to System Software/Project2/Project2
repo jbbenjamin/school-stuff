@@ -1,0 +1,27 @@
+	START	100
+	LDA	#0	.Initialize Register A to 0
+	LDT	#30	.Initialize Register T to 30
+ADDLP	LDX	#0	.Initialize Register X to 0
+	ADDR	A,X	.Store the sum of Register A and Register X in Register X
+	LDS	FSTRING,X	.Load Register S with the integer located at index X of FSTRING
+	ADD	#3	.Add 3 to the number currently in Register A
+	LDX	#0	.Reset Register X to 0
+	ADDR	T,X	.Add 30 to Register X
+	SUBR	A,X	.Subtract the number currently located in Register A from the number in Register X
+	STS	RSTRING,X	.Take the number currently in Register A and store it in index X of RSTRING
+	COMP	C30	.Compare the number currently in Register A to C30 which has the value 30
+	JLT	ADDLP	.If the number in Register A is less than 30, jump back to the statement with label ADDLP
+
+C30	WORD	30
+FSTRING	WORD	9
+	WORD	8
+	WORD	7
+	WORD	6
+	WORD	5
+	WORD	4
+	WORD	3
+	WORD	2
+	WORD	1
+	WORD	0
+RSTRING	RESW	10
+	END
