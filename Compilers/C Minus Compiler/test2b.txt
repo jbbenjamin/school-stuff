@@ -1,0 +1,12 @@
+
+/* test for basic functionality of proj 3 - should pass */
+/* test 2 - 2 methods, scope check on z */
+
+void main (void)
+{
+	int x;
+	int y[10];
+	while(x + y[3] - 2 > 5){
+	x = y[3] + x * 5;
+	}
+}

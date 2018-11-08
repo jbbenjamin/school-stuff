@@ -1,0 +1,30 @@
+
+/* test for basic functionality of proj 3 - should pass */
+/* test 2 - 2 methods, scope check on z */
+
+int x;
+int y[5];
+
+void main ( int x, int y )
+{
+	int z;
+	
+	z = x + y * x;
+	while(x > y){
+	x / 2;
+	if(y <= x){
+	y = y + 1;
+	}
+	else{
+	y = 6;
+	}
+	}
+}
+
+int my ( float b, int u)
+{
+	int z;
+	
+	z = z * y + y - y;
+	return z;
+}

@@ -1,0 +1,22 @@
+
+/* test for basic functionality of proj 3 - should pass */
+/* test 2 - 2 methods, scope check on z */
+
+int x;
+int y;
+
+int my ( int x, int y )
+{
+	int z;
+	
+	z = x + y;
+	return;
+}
+
+void main (void)
+{
+	int z;
+	
+	z = z+y;
+	return;
+}

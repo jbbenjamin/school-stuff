@@ -1,0 +1,9 @@
+void main(int x) {
+
+float y;
+int zin[3];
+void i[0];
+int i;
+float d;
+
+}

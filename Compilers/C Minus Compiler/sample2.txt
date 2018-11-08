@@ -1,0 +1,12 @@
+int good;
+float array[7];
+void func(int someNum, int otherNum){
+	int localthing;
+	localthing = otherNum;
+	if(otherNum <= someNum){
+		someNum = otherNum + someNum;
+	}
+	otherNum = otherNum + 4;
+	return;
+     }
+	
