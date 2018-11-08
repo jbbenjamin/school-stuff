@@ -1,0 +1,4 @@
+CREATE TABLE employee (heyooo charachter(1),testt number(3));
+INSERT INTO employee VALUES (testttttt,hello);
+INSERT INTO employee VALUES ('AHHHH',SKJLDKK);
+CREATE TABLE test (kdjskdjkjd date(mm/dd/yyyy),yedbjd character(5));

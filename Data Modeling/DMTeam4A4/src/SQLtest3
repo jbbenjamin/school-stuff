@@ -1,0 +1,2 @@
+CREATE TABLE employee (heyooo charachter(1),testt number(3));
+create table table1 (somedate date(12/31/1999), sOMenum number(3, 5) not NULL, i integer(17), name character(12) not null);
