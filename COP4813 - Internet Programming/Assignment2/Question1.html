@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            table, th, td{
+                text-align: center;
+                padding: 4px;
+                border-collapse: collapse;
+                border-bottom: 2px solid orange;
+                border-top: 2px solid orange;
+                border-right: 2px solid orange;
+                border-left: 2px solid orange;
+            }
+            th, td {
+                border-top: hidden;
+            }
+        </style>
+    </head>
+    <body>
+        <script type = "text/javascript">
+        var num;
+
+        document.writeln('<table border = "1">');
+        document.writeln('<tr style="background: #ff9312"><th style="color: #ffffff">number</th><th style="color: #ffffff">square</th><th style="color: #ffffff">cube</th>');
+        for(num = 0; num < 6; num++){
+            if ((num % 2) == 0){
+                document.writeln('<tr style="background-color: lavenderblush" ><td>' + num + '</td><td>' + Math.pow(num, 2) + '</td><td>' + Math.pow(num, 3) + '</td>');
+            }
+            else {
+                document.writeln('<tr><td>' + num + '</td><td>' + Math.pow(num, 2) + '</td><td>' + Math.pow(num, 3) + '</td>');
+            }
+        }
+        </script>
+    </body>
+</html>

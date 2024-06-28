@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+
+
+<html>
+    <head>
+        <script>
+            function start() {
+
+                var numbers = new Array(101);
+                var outputString = "";
+
+                for (var i = 0; i < (numbers.length); ++i) {
+                    numbers[i] = 1;
+                }
+
+
+                numbers[0] = 0;
+                numbers[1] = 0;
+
+                for (var i = 2; i < (numbers.length/10); ++i) {
+                    for (var j = 0; j < numbers.length; ++j) {
+                        if (j % i == 0) {
+                            if (i != j) {
+                                numbers[j] = 0;
+                            }
+                        }
+                    }
+                }
+
+                for (var i = 0; i < numbers.length; ++i) {
+
+                    if (numbers[i] == 1) {
+                        outputString += i + ", ";
+                    }
+                }
+                document.write("<p>The prime numbers from 0 to 100 are: " + outputString.substring(0, outputString.lastIndexOf(",")) + "</p>");
+            }
+
+            window.addEventListener( "load", start, false);
+        </script>
+    </head>
+    <body>
+    </body>
+</html>

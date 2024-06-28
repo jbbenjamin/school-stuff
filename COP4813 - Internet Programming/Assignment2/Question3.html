@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type = "text/javascript">
+            var headsCount = 0;
+            var tailsCount = 0;
+            
+            function result()
+            {
+                var result = flip();    
+                if(result == true)
+                {
+                    ++headsCount;
+                    document.getElementById("heads").innerHTML = headsCount;
+                } else{
+                    ++tailsCount;
+                    document.getElementById("tails").innerHTML = tailsCount;
+                }
+            }
+
+            function flip()
+            {
+                var coinflip; 
+                coinflip = (Math.random());
+        
+                if (coinflip >= 0.50)
+                {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        </script>
+    </head>
+    <body>
+        <table id = "countTable" border = "1">
+            <tr><th>Heads</th><th>Tails</th>
+            <tr><td id = "heads"></td><td id = "tails"></td>
+        </table>
+        <form action = "#">
+           <button onclick = result()>Toss</button> 
+        </form>
+    </body>
+</html>

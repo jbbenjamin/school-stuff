@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Spotify Artist Search</title>
+    <style type="text/css">
+        h3 p { font-weight: normal; font-size: small; }
+    </style>
+</head>
+<body>
+    <p>Enter artist's name and press "Search"</p>
+    <input id="searchBox" type="text"/>
+    <input id="sButton" type="button" value="Search"/>
+    <div id="artistList">
+        <div id="artists"></div>
+    </div>
+    <div id="artistInfoBlock">
+        <div id="artistInfo"></div>
+    </div>
+    <script>
+        
+        function start() {
+            document.getElementById("sButton").addEventListener("click", artistSearch, false);
+        }
+
+        //make an HTTP 'GET' request for artists based on the name the user enters
+        function artistSearch() {
+            var searchBoxString = document.getElementById("searchBox").value;
+
+            var requestURL = "https://api.spotify.com/v1/search?q=" + searchBoxString + "&type=artist";
+            try{
+                var asyncRequest = new XMLHttpRequest();
+                asyncRequest.addEventListener("readystatechange", function() { listArtists(asyncRequest) }, false);
+                asyncRequest.open("GET", requestURL, true);
+                asyncRequest.setRequestHeader("Accept", "application/json; charset=utf-8");
+                asyncRequest.send();
+            }
+            catch (exception){
+                alert("Request failed");
+                alert(exception);
+            }
+        }
+
+        //list each artist
+        function listArtists(asyncRequest) {
+            if (asyncRequest.readyState == 4 && asyncRequest.status == 200){
+
+                var data = JSON.parse(asyncRequest.responseText);
+
+                //clear additional artist info if present
+                if(document.getElementById("artists") == null){
+                    document.getElementById("artistInfoBlock").removeChild(document.getElementById("artistInfo"));
+                    var artists = document.createElement("div");
+                    artists.setAttribute("id", "artists");
+                    document.getElementById("artistList").appendChild(artists);
+                }
+
+                //makes paragraph elements with the names of the artists
+                for(var i = 0; data.artists.items[i] != null; i++){
+                    var entry = document.createElement("div");
+                    var para = document.createElement("p");
+                    para.innerHTML = data.artists.items[i].name;
+                    para.setAttribute("artistID", data.artists.items[i].id);
+                    para.setAttribute("url", data.artists.items[i].href);
+                    para.addEventListener("click", function() { selectArtist(this.getAttribute("artistID"), this.getAttribute("url")) }, false); //adds a click eventhandler to each artist
+                    para.addEventListener("mouseover", function(){setStyle(this)}, false);
+                    para.addEventListener("mouseout", function(){removeStyle(this)}, false);
+                    document.getElementById("artists").appendChild(entry);
+                    entry.appendChild(para);
+                }
+
+            }
+
+            if(asyncRequest.status != 0 && asyncRequest.status != 200){
+                alert("Something went wrong....\n" + "Status: " + asyncRequest.status);
+            }
+        }
+
+        function setStyle(artistEntry) {
+            artistEntry.setAttribute("style", "color: blue");
+        }
+
+        function removeStyle(artistEntry) {
+            artistEntry.setAttribute("style", "color: black");
+        }
+
+
+        //makes an HTTP 'GET' request for additional artist information when user clicks on artist name
+        function selectArtist(artID, artURL) {
+
+            try{
+                var infoRequest = new XMLHttpRequest();
+                infoRequest.addEventListener("readystatechange", function() { moreInfo(infoRequest, artID) }, false);
+                infoRequest.open("GET", artURL, true);
+                infoRequest.setRequestHeader("Accept", "application/json; charset=utf-8");
+                infoRequest.send();
+            }
+            catch (exception){
+                alert("Request failed");
+                alert(exception);
+            }
+        }
+
+        //displays more artist information
+        function  moreInfo(infoRequest, artID) {
+            if (infoRequest.readyState == 4 && infoRequest.status == 200){
+
+                var artistData = JSON.parse(infoRequest.responseText);
+
+                //clear other artist search results
+                document.getElementById("artistList").removeChild(document.getElementById("artists"));
+                var artistInfo = document.createElement("div");
+                artistInfo.setAttribute("id", "artistInfo");
+                document.getElementById("artistInfoBlock").appendChild(artistInfo);
+
+                //artist name
+                var artName = document.createElement("div");
+                var nameHeading = document.createElement("h1");
+                nameHeading.innerHTML = artistData.name;
+                artName.appendChild(nameHeading);
+                document.getElementById("artistInfo").appendChild(artName);
+
+                //artist genres
+                if(artistData.genres[0] != null) {
+                    var artGenre = document.createElement("div");
+                    var genreHeading = document.createElement("h3");
+                    genreHeading.innerHTML = "Genres:";
+                    artGenre.appendChild(genreHeading);
+
+                    for (var i = 0; artistData.genres[i] != null; i++) {
+                        var genre = document.createElement("p");
+                        genre.setAttribute("id", "genre" + i);
+                        genre.innerHTML = artistData.genres[i];
+                        genreHeading.appendChild(genre);
+                    }
+                    document.getElementById("artistInfo").appendChild(artGenre);
+                }
+
+                //artist popularity
+                var artPopularity = document.createElement("div");
+                var popularity = document.createElement("h3");
+                popularity.innerHTML = "Popularity:  " + artistData.popularity;
+                artPopularity.appendChild(popularity);
+                document.getElementById("artistInfo").appendChild(artPopularity);
+
+                //HTTP 'GET' request for albums
+                try{
+                    var albumURL = "https://api.spotify.com/v1/artists/" + artID + "/albums";
+                    var albumRequest = new XMLHttpRequest();
+                    albumRequest.addEventListener("readystatechange", function() { getAlbums(albumRequest, artID) }, false);
+                    albumRequest.open("GET", albumURL, true);
+                    albumRequest.setRequestHeader("Accept", "application/json; charset=utf-8");
+                    albumRequest.send();
+                }
+                catch (exception){
+                    alert("Request failed");
+                    alert(exception);
+                }
+
+            }
+
+            if (infoRequest.status != 0 && infoRequest.status != 200){
+                alert("Something went wrong....\n" + "Status: " + infoRequest.status);
+            }
+
+
+        }
+
+        function getAlbums(albumRequest, artID) {
+            if (albumRequest.readyState == 4 && albumRequest.status == 200) {
+
+                var albumData = JSON.parse(albumRequest.responseText);
+                var albumCount = 0;
+                //albums
+                if (albumData.items[0] != null) {
+                    var albums = document.createElement("div");
+                    var albumHeading = document.createElement("h3");
+                    albumHeading.innerHTML = "Albums";
+                    var labelHeadings = document.createElement("div");
+                    var albumList = document.createElement("p");
+                    albumHeading.appendChild(labelHeadings);
+                    labelHeadings.appendChild(albumList);
+                    albums.appendChild(albumHeading);
+
+                    //select the first three albums released in the US
+                    for(var i = 0; albumCount < 3 && albumData.items[i] != null; i++) {
+                        //for(var j = 0; j < albumData.items[i].available_markets[j] != null; j++) {
+                            //if(albumData.items[i].available_markets[j] == "US") {
+                                var albumLabel = document.createElement("label");
+                                albumLabel.innerHTML = albumData.items[i].name;
+                                var album = document.createElement("img");
+                                album.setAttribute("id", "album" + (albumCount + 1));
+                                album.setAttribute("title", albumData.items[i].name);
+                                album.setAttribute("src", albumData.items[i].images[0].url);
+                                album.setAttribute("alt", albumData.items[i].name);
+                                album.setAttribute("height", "160px");
+                                album.setAttribute("width", "160px");
+
+                                //spaces added purely for aesthetic purposes
+                                var labelspace = document.createElement("img");
+                                labelspace.setAttribute("src", "space.png");
+                                labelspace.setAttribute("height", "25px");
+                                labelspace.setAttribute("width", "40px");
+                                labelHeadings.appendChild(albumLabel);
+                                labelHeadings.appendChild(labelspace);
+
+                                //spaces added purely for aesthetic purposes
+                                var space = document.createElement("img");
+                                space.setAttribute("src", "space.png");
+                                space.setAttribute("height", "160px");
+                                space.setAttribute("width", "50px");
+                                albumList.appendChild(album);
+                                albumList.appendChild(space);
+                                albumCount++;
+                              //  break;
+                            //}
+                        //}
+                    }
+                    document.getElementById("artistInfo").appendChild(albums);
+                }
+
+                //HTTP 'GET' request for related artists
+                try{
+                    var relatedURL = "https://api.spotify.com/v1/artists/" + artID + "/related-artists";
+                    var relatedRequest = new XMLHttpRequest();
+                    relatedRequest.addEventListener("readystatechange", function() { getRelated(relatedRequest, artID) }, false);
+                    relatedRequest.open("GET", relatedURL, true);
+                    relatedRequest.setRequestHeader("Accept", "application/json; charset=utf-8");
+                    relatedRequest.send();
+                }
+                catch (exception){
+                    alert("Request failed");
+                    alert(exception);
+                }
+            }
+
+            if (albumRequest.status != 0 && albumRequest.status != 200){
+                alert("Something went wrong....\n" + "Status: " + albumRequest.status);
+            }
+        }
+
+        function getRelated(relatedRequest, artID) {
+            if (relatedRequest.readyState == 4 && relatedRequest.status == 200) {
+
+                var relatedData = JSON.parse(relatedRequest.responseText);
+                var relatedCount = 0;
+
+                //related artists
+                if (relatedData.artists[0] != null) {
+                    var relatedArtists = document.createElement("div");
+                    var relatedHeading = document.createElement("h3");
+                    relatedHeading.innerHTML = "Related Artists:";
+                    relatedArtists.appendChild(relatedHeading);
+
+                    for (var i = 0; relatedCount < 5 && relatedData.artists[i] != null; i++) {
+                        var relArtist = document.createElement("p");
+                        relArtist.setAttribute("id", "rel" + i);
+                        relArtist.innerHTML = relatedData.artists[i].name;
+                        relatedHeading.appendChild(relArtist);
+                        relatedCount++;
+                    }
+                    document.getElementById("artistInfo").appendChild(relatedArtists);
+                }
+            }
+
+            if (relatedRequest.status != 0 && relatedRequest.status != 200){
+                alert("Something went wrong....\n" + "Status: " + relatedRequest.status);
+            }
+        }
+
+        window.addEventListener("load", start, false);
+    </script>
+</body>
+</html>

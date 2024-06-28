@@ -1,0 +1,77 @@
+<! DOCTYPE HTML>
+<html>
+<head>
+    <script>
+
+        var emptyCell;
+
+        function initializeTable() {
+
+            var numArray = new Array(16);
+
+            //fill an array with numbers 1-16
+            for (var ia = 0; ia < numArray.length; ia++) {
+                numArray[ia] = (ia + 1);
+            }
+
+            var randomIndex1, randomIndex2, tempValue;
+
+            //shuffle the array values
+            for (var ib = 0; ib < numArray.length; ib++){
+
+                randomIndex1 = Math.floor(Math.random() * numArray.length);
+                randomIndex2 = Math.floor(Math.random() * numArray.length);
+
+                tempValue = numArray[randomIndex1];
+                numArray[randomIndex1] = numArray[randomIndex2];
+                numArray[randomIndex2] = tempValue;
+
+            }
+
+
+            var currentIndex = 1;
+
+            // make the 4x4 grid, insert with numbers form the array, except '16'.
+            // Also, add a click event to each square.
+
+            document.writeln("<table id = 'grid' border = '1' cellpadding='4px'>");
+
+            for (var ic = 0; ic < 4; ic++){
+                document.writeln("<tr>");
+                for(var j = 0; j < 4; j++){
+                    if(numArray[(currentIndex - 1)] == 16){
+                        document.writeln("<td id = " + String(currentIndex) + "></td>");
+                        document.getElementById(String(currentIndex)).addEventListener("click", function() { cellSwap((this.id))}, false);
+                        emptyCell = String(currentIndex);
+                        currentIndex++;
+                    }
+                    else {
+                        document.writeln("<td id = " + String(currentIndex) + ">" + numArray[(currentIndex - 1)] + "</td>");
+                        document.getElementById(String(currentIndex)).addEventListener("click", function() { cellSwap((this.id))}, false);
+                        currentIndex++;
+                    }
+                }
+            }
+        }
+
+        //swaps the clicked on square's value and the empty square's value
+        //IF AND ONLY IF the clicked on square is adjacent to the empty square
+        function cellSwap(cellName){
+            if(cellName == String(parseInt(emptyCell) - 1) && (cellName % 4) != 0 || cellName == String(parseInt(emptyCell) - 4) ||
+                cellName == String(parseInt(emptyCell) + 1) && (cellName % 4) != 1 || cellName == String((parseInt(emptyCell)) + 4)){
+
+                var selectedCellNum = document.getElementById(cellName).innerHTML;
+                document.getElementById(cellName).innerHTML = "";
+                document.getElementById(emptyCell).innerHTML = String(selectedCellNum);
+
+                emptyCell = cellName;
+                return;
+            }
+        }
+
+        window.addEventListener("load", initializeTable, false);
+    </script>
+</head>
+<body>
+</body>
+</html>

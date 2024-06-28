@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment 5</title>
+    <style type="text/css">
+        p.fieldNames {visibility: hidden}
+        p.searchbox {visibility: hidden}
+    </style>
+</head>
+<body>
+    <form method = "post" action = "Assignment5.php">
+        <label>Select an action:</label>
+        <p id="radios"><input type = "radio" name = "command" value = "Insert" onclick="showFields()">Insert new record
+        <input type = "radio" name = "command" value = "Update" onclick="showFields()">Update record
+            <input type = "radio" name = "command" value = "Search" onclick="showSearch()">Search by keyword
+        </p>
+        <input type="submit" name="submit" value="submit">
+        <p class="fieldNames" id="fields"><label id="label1">URL: </label><input id="field1" type = "text" name = "URL">
+            <label id="label2">Description: </label><input id="field2" type = "text" name = "description">
+        </p>
+        <p class="searchbox" id="sBox"><label>Search by keyword: </label><input id="field3" type = "text" name = "Search"></p>
+    </form>
+    <script>
+        function showFields() {
+            var fields = document.getElementById("fields");
+            fields.setAttribute("style", "visibility: visible");
+
+            var sBox = document.getElementById("sBox");
+            sBox.setAttribute("style", "visibility: hidden");
+        }
+
+        function showSearch() {
+            var fields = document.getElementById("fields");
+            fields.setAttribute("style", "visibility: hidden");
+
+            var sBox = document.getElementById("sBox");
+            sBox.setAttribute("style", "visibility: visible");
+        }
+//        function showInsertFields() {
+//            var label1 = document.getElementById("label1");
+//            label1.setAttribute("style", "visibility: visible");
+//            label1.innerHTML = "URL: ";
+//            var field1 = document.getElementById("field1");
+//            field1.setAttribute("style", "visibility: visible");
+//            field1.setAttribute("name", "URL");
+//            var label2 = document.getElementById("label2");
+//            label2.setAttribute("style", "visibility: visible");
+//            label2.innerHTML = "description: ";
+//            var field2 = document.getElementById("field2");
+//            field2.setAttribute("style", "visibility: visible");
+//            field2.setAttribute("name", "description");
+//            var label3 = document.getElementById("label3");
+//            label3.setAttribute("style", "visibility: hidden");
+//            label3.innerHTML = "None";
+//            var field3 = document.getElementById("field3");
+//            field3.setAttribute("style", "visibility: hidden");
+//            field3.setAttribute("name", "None");
+//        }
+//        function showUpdateFields() {
+//            var label1 = document.getElementById("label1");
+//            label1.setAttribute("style", "visibility: visible");
+//            label1.innerHTML = "Line#: ";
+//            var field1 = document.getElementById("field1");
+//            field1.setAttribute("style", "visibility: visible");
+//            field1.setAttribute("name", "lineNum");
+//            var label2 = document.getElementById("label2");
+//            label2.setAttribute("style", "visibility: visible");
+//            label2.innerHTML = "URL: ";
+//            var field2 = document.getElementById("field2");
+//            field2.setAttribute("style", "visibility: visible");
+//            field2.setAttribute("name", "URL");
+//            var label3 = document.getElementById("label3");
+//            label3.setAttribute("style", "visibility: visible");
+//            label3.innerHTML = "description: ";
+//            var field3 = document.getElementById("field3");
+//            field3.setAttribute("style", "visibility: visible");
+//            field3.setAttribute("name", "description");
+//        }
+    </script>
+</body>
+</html>

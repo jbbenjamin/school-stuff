@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <script type = "text/javascript">
+        var origNumber;
+        var digitOne;
+        var digitTwo;
+        var digitThree;
+        var digitFour;
+        var newNumber;
+
+        origNumber = window.prompt("Enter a 4-digit number");
+
+        digitOne = parseInt(origNumber.substring(0, 1));
+        digitTwo = parseInt(origNumber.substring(1, 2));
+        digitThree = parseInt(origNumber.substring(2, 3));
+        digitFour = parseInt(origNumber.substring(3, 4));
+
+        digitOne = (digitOne + 7) % 10;
+        digitTwo = (digitTwo + 7) % 10;
+        digitThree = (digitThree + 7) % 10;
+        digitFour = (digitFour + 7) % 10;
+
+        newNumber = "" + digitThree + digitFour + digitOne + digitTwo;
+        document.write("<p>New number is " + newNumber + "</p>");
+        </script>
+    </head>
+</html>
